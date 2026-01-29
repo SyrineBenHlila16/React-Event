@@ -1,10 +1,10 @@
 import './App.css'
-import Ecmascript from './Ecmascript';
+import Traitement from './Ecmascript/Traitement';
 function App() {
 
   return (
     <div>
-      <Ecmascript />
+      <Traitement />
     </div>
   )
 }

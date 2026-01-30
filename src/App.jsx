@@ -1,12 +1,20 @@
 import './App.css'
 import Traitement from './Ecmascript/Traitement';
+import Hooks from './Hooks';
+import LifecycleDemo from './LifecycleDemo';
+import UpdatingDemo from './UpdatingDemo';
 function App() {
 
   return (
     <div>
-      <Traitement />
+      <Hooks name="MyComponent"
+        description="This is a sample component."
+      />
+      {/* <Traitement />
+      <LifecycleDemo/>
+      <UpdatingDemo/> */}
     </div>
   )
 }
 
-export default App
+export default App;

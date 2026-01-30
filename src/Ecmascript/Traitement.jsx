@@ -64,7 +64,7 @@ const Traitement = () => {
 
     const totalMarks = students
         .map(student => ({
-            ...student, //destructuration : compie al objet el koll fi student
+            ...student, //destructuration : conpie al objet el koll fi student
             marks: student.marks < 50 ? student.marks + 15 : student.marks
         }))
         .filter(student => student.marks > 50)

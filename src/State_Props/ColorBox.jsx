@@ -8,10 +8,10 @@ function ColorBox() {
     };
     return (
         <>
-        <br />
-            <div style={{ backgroundColor: color, width: "100px", height: "100px" , alignContent:"center", margin:"auto"}}>
+            <br />
+            <div style={{ backgroundColor: color, width: "100px", height: "100px", alignContent: "center", margin: "auto" }}>
             </div>
-            <button onClick={changeColor}>Change Color</button>
+            <button onClick={changeColor}>Changer de Couleur</button>
         </>
     );
 }

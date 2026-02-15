@@ -6,6 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 // function Event({ name,description,  imageUrl, price, nbTickets, nbParticipants }) {
 
@@ -38,7 +39,8 @@ const handleLike = () => {
                 title="events"
             />
             <CardContent>
-                <Typography gutterBottom variant="h5" component="div" style={{ fontWeight: 'bold' }}>
+                <Typography gutterBottom variant="h5"  style={{ fontWeight: 'bold' }}
+                component={NavLink} to={`/events/${eventInfo.name}`}>
                     {eventInfo.name}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
@@ -56,8 +58,8 @@ const handleLike = () => {
                
             </CardContent>
             <CardActions>
-                <Button size="small" onClick={handleBuy} disabled={eventInfo.nbTickets === 0 ? true : false}>Book an event</Button>
                 <Button size="small" onClick={handleLike}> {eventInfo.likes ? 'Dislike' : 'Like'}</Button>
+                <Button size="small" onClick={handleBuy} disabled={eventInfo.nbTickets === 0 ? true : false}>Book an event</Button>
             </CardActions>
         </Card>
     );

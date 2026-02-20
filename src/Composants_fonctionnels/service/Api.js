@@ -6,6 +6,15 @@ export const getallEvents = async (id) => {
     id = id || "";
     return await axios.get(`${url}/${id}`);
 };
+export const getEventById = async (id) => {
+    return await axios.get(`${url}/${id}`);
+};
+export const getEventByName = async (name) => {
+    return await axios.get(`${url}?name=${name}`);
+};
+export const deleteEventById = async (id) => {
+    return await axios.delete(`${url}/${id}`);
+};
 export const addEvent = async (event) => {
     return await axios.post(url, event);
 };

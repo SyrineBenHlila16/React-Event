@@ -42,7 +42,6 @@ function Events() {
          setEvents(data.data);
       };
       getEvents();
-      console.log(events);
    }, []);
    return (
       <>

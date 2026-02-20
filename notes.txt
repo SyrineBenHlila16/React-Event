@@ -1,0 +1,14 @@
+Creation d'un projet : 
+npm create vite@latest workshop-react -- --template react
+
+Installation json server : 
++ npm install -g json-server
++ json-server --watch src/db.json
+
+Manipulation des API : 
++ npm install axios
+
+Installation react-hook form :
+npm install react-hook form 
+--- Utilsation de useForm()
+(ancienne méthode avec la déclaration d'une const [personne, setPersonnes]= useState() Onchange={setPersonnes()} avec utilisation de 'value={personne.title}')  

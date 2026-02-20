@@ -1,4 +1,3 @@
-import Events from "./Events";
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -12,6 +11,8 @@ import { NavLink } from "react-router-dom";
 
 function Event({ event , showAlert}) {
    const [eventInfo, setEventInfo] = React.useState(event);
+
+   
   const handleBuy = () => {
     // if (eventInfo.nbTickets > 0) {
       setEventInfo(prev => ({
@@ -22,6 +23,7 @@ function Event({ event , showAlert}) {
     );
     showAlert(); //appel parent > fils
     }
+    
 const handleLike = () => {
   setEventInfo(prevEventInfo => {
     return {

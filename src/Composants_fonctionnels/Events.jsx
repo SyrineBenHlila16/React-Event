@@ -1,7 +1,8 @@
 import { Row, Col, Alert } from "react-bootstrap";
 import Event from "./Event";
-import events from "./data/events.json";
+//import events from "./data/events.json";
 import React, { useEffect } from "react";
+import { getallEvents } from "./service/Api";
 
 function Events() {
 
@@ -20,6 +21,7 @@ function Events() {
    // });
    const [isShowBuyAlert, setIsShowAlert] = React.useState(false);
    const [isShowWelcomeAlert, setIsShowWelcomeAlert] = React.useState(true);
+   const [events, setEvents] = React.useState([]);
    const showAlert = () => {
       setIsShowAlert(true);
       setTimeout(() => { //lors de chargement de l'alert elle sera afficher juste 2 secondes (utilisation de setTimeout(() => {}, 2000))
@@ -32,6 +34,15 @@ function Events() {
       setTimeout(() => {
          setIsShowWelcomeAlert(false);
       }, 3000);
+   }, []);
+
+   useEffect(() => {
+      const getEvents = async () => {
+         const data = await getallEvents();
+         setEvents(data.data);
+      };
+      getEvents();
+      console.log(events);
    }, []);
    return (
       <>

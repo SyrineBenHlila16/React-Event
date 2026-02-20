@@ -22,6 +22,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import App from "./App.jsx";
 import NotFound from "./Composants_fonctionnels/NotFound.jsx";
+import AddEvent from "./Composants_fonctionnels/AddEvent.jsx";
 
 const Events = lazy(() => import("./Composants_fonctionnels/Events.jsx"));
 const EventDetails = lazy(() => import("./Composants_fonctionnels/EventDetails.jsx"));
@@ -35,19 +36,25 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: (
-            <Events />
+          <Events />
         ),
       },
       {
         path: "events",
         element: (
-            <Events />
+          <Events />
         ),
       },
       {
         path: "events/:name",
         element: (
-            <EventDetails />
+          <EventDetails />
+        ),
+      },
+      {
+        path: "events/add",
+        element: (
+          <AddEvent />
         ),
       }
     ]

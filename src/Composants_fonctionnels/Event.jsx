@@ -60,8 +60,11 @@ const handleLike = () => {
                
             </CardContent>
             <CardActions>
-                <Button size="small" onClick={handleLike}> {eventInfo.likes ? 'Dislike' : 'Like'}</Button>
-                <Button size="small" onClick={handleBuy} disabled={eventInfo.nbTickets === 0 ? true : false}>Book an event</Button>
+                <Button size="small" className="danger" onClick={handleLike}> {eventInfo.likes ? 'Dislike' : 'Like'}</Button>
+                <Button size="small" className="book-button" onClick={handleBuy} disabled={eventInfo.nbTickets === 0 ? true : false}>Book an event</Button>
+                <Button size="small" className="update-button" component={NavLink} to={`/events/${eventInfo.id}`}>Update</Button>
+                <Button size="small" className="delete-button" onClick={() => showAlert("delete", eventInfo.id)}>Delete</Button>
+
             </CardActions>
         </Card>
     );

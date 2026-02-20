@@ -2,7 +2,9 @@ import { Row, Col, Alert } from "react-bootstrap";
 import Event from "./Event";
 //import events from "./data/events.json";
 import React, { useEffect } from "react";
-import { getallEvents } from "./service/Api";
+import { addEvent, getallEvents } from "./service/Api";
+import { NavLink } from "react-router-dom";
+import AddEvent from "./AddEvent";
 
 function Events() {
 
@@ -21,7 +23,9 @@ function Events() {
    // });
    const [isShowBuyAlert, setIsShowAlert] = React.useState(false);
    const [isShowWelcomeAlert, setIsShowWelcomeAlert] = React.useState(true);
+   const [showAddForm, setShowAddForm] = React.useState(false);
    const [events, setEvents] = React.useState([]);
+
    const showAlert = () => {
       setIsShowAlert(true);
       setTimeout(() => { //lors de chargement de l'alert elle sera afficher juste 2 secondes (utilisation de setTimeout(() => {}, 2000))
@@ -43,6 +47,17 @@ function Events() {
       };
       getEvents();
    }, []);
+ const handleEventAdded = async (newEvent) => {
+  try {
+    const response = await addEvent(newEvent); // POST
+    setEvents((prev) => [...prev, response.data]); // update state
+    setShowAddForm(false);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+
    return (
       <>
          {isShowBuyAlert &&
@@ -56,6 +71,8 @@ function Events() {
                <Alert.Heading>Welcome to our events page</Alert.Heading>
             </Alert>
          }
+         {showAddForm && <AddEvent onEventAdded={handleEventAdded} />}
+         <button onClick={() => setShowAddForm(true)}>Add Event</button>
          <Row>
             {events.map((event, index) => (
                <Col key={`col-event-${index}`} xs={12} sm={6} md={4} className="mb-4">

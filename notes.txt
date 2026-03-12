@@ -12,3 +12,9 @@ Installation react-hook form :
 npm install react-hook form 
 --- Utilsation de useForm()
 (ancienne méthode avec la déclaration d'une const [personne, setPersonnes]= useState() Onchange={setPersonnes()} avec utilisation de 'value={personne.title}')  
+
+Installation Zustand/middleware
++ npm install zustand/middleware
+
+pour lancer le projet utiliser : npm run dev
+pour lancer json server :  json-server --watch src/Composants_fonctionnels/data/db.json --port 3001

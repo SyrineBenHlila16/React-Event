@@ -6,14 +6,18 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { deleteEventById } from './service/Api';
+import useEventStore from './ZustandStores/useEventStore';
 
 // function Event({ name,description,  imageUrl, price, nbTickets, nbParticipants }) {
 
 function Event({ event , showAlert}) {
    const [eventInfo, setEventInfo] = React.useState(event);
+  // const {deleteEventById} = deleteEventById();
 
-   
-  const handleBuy = () => {
+   //jebna koll chay fi event w7na 3mlna state bch nekhou hajja eli hachty beha 
+   const deleteEventObject = useEventStore((state) => state.deleteEventObject);
+   const handleBuy = () => {
     // if (eventInfo.nbTickets > 0) {
       setEventInfo(prev => ({
         ...prev,
@@ -32,6 +36,16 @@ const handleLike = () => {
     };
   });
 }
+const deleteEvent = async () => {
+  showAlert("delete", eventInfo.id);
+  await deleteEventById(eventInfo.id);
+  deleteEventObject(eventInfo.id);
+   //  il n'est pas nécessaire de faire un reload de la page, car on met à jour le state local et le store Zustand
+   // window.location.reload();
+
+}
+
+
 
     return (
         <Card sx={{ maxWidth: 345 }}>
@@ -63,7 +77,7 @@ const handleLike = () => {
                 <Button size="small" className="danger" onClick={handleLike}> {eventInfo.likes ? 'Dislike' : 'Like'}</Button>
                 <Button size="small" className="book-button" onClick={handleBuy} disabled={eventInfo.nbTickets === 0 ? true : false}>Book an event</Button>
                 <Button size="small" className="update-button" component={NavLink} to={`/events/${eventInfo.id}`}>Update</Button>
-                <Button size="small" className="delete-button" onClick={() => showAlert("delete", eventInfo.id)}>Delete</Button>
+                <Button size="small" className="delete-button" onClick={() => deleteEvent(eventInfo.id)}>Delete</Button>
 
             </CardActions>
         </Card>

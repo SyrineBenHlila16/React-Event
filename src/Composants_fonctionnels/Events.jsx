@@ -2,9 +2,10 @@ import { Row, Col, Alert } from "react-bootstrap";
 import Event from "./Event";
 //import events from "./data/events.json";
 import React, { useEffect } from "react";
-import { addEvent, getallEvents } from "./service/Api";
-import { NavLink } from "react-router-dom";
+import { addEvent } from "./service/Api";
+import { NavLink, useNavigate } from "react-router-dom";
 import AddEvent from "./AddEvent";
+import useEventStore from "./ZustandStores/useEventStore";
 
 function Events() {
 
@@ -23,12 +24,22 @@ function Events() {
    // });
    const [isShowBuyAlert, setIsShowAlert] = React.useState(false);
    const [isShowWelcomeAlert, setIsShowWelcomeAlert] = React.useState(true);
-   const [showAddForm, setShowAddForm] = React.useState(false);
-   const [events, setEvents] = React.useState([]);
+   //const [events, setEvents] = React.useState([]);
 
+   const [showAddForm, setShowAddForm] = React.useState(false);
+   const events = useEventStore((state) => state.events);
+   const fetchEvents = useEventStore.getState().fetchEvents;
+   const addEventObject = useEventStore((state) => state.addEventObject);
+   // const { addEventObject } = useEventStore((state) => ({
+   //    addEventObject: state.addEventObject
+   // }));
+   // const deleteEventObject = useEventStore((state) => state.deleteEventObject);
+   const navigate = useNavigate();
+   // const favorites = useEventStore((state) => state.favorites);
+   // const fetchFavorites = useEventStore.getState().fetchFavorites; //fetchFavorites
    const showAlert = () => {
       setIsShowAlert(true);
-      setTimeout(() => { //lors de chargement de l'alert elle sera afficher juste 2 secondes (utilisation de setTimeout(() => {}, 2000))
+      setTimeout(() => {
          setIsShowAlert(false);
       }, 2000);
    }
@@ -41,25 +52,31 @@ function Events() {
    }, []);
 
    useEffect(() => {
-      const getEvents = async () => {
-         const data = await getallEvents();
-         setEvents(data.data);
-      };
-      getEvents();
+      // const getEvents = async () => {
+      //    const response = await getallEvents();
+      //    setEvents(response.data);
+      // };
+      // getEvents();
+      fetchEvents()
    }, []);
- const handleEventAdded = async (newEvent) => {
-  try {
-    const response = await addEvent(newEvent); // POST
-    setEvents((prev) => [...prev, response.data]); // update state
-    setShowAddForm(false);
-  } catch (err) {
-    console.error(err);
-  }
-}
-
+   const handleEventAdded = async (newEvent) => {
+      try {
+         const response = await addEvent(newEvent);
+         // Met à jour la liste des événements avec le nouvel événement ajouté
+         //setEvents((prev) => [...prev, response.data]); 
+         setShowAddForm(false);
+         addEventObject(response.data);
+      } catch (err) {
+         console.error(err);
+      }
+   }
+   // useEffect(() => {
+   //    fetchFavorites();
+   // }, []);
 
    return (
       <>
+
          {isShowBuyAlert &&
             <Alert variant="success" className="text-center" >
                {/* onLoad : permet de déclencher une action au chargement du composant */}
@@ -72,9 +89,9 @@ function Events() {
             </Alert>
          }
          {showAddForm && <AddEvent onEventAdded={handleEventAdded} />}
-         <button onClick={() => setShowAddForm(true)}>Add Event</button>
+         <button onClick={() => navigate('/events/add')}>Add Event</button>
          <Row>
-            {events.map((event, index) => (
+            {events.map((event, { index }) => (
                <Col key={`col-event-${index}`} xs={12} sm={6} md={4} className="mb-4">
 
                   <Event
@@ -87,7 +104,21 @@ function Events() {
 
             ))}
          </Row>
-
+         {/* <h2>⭐ Mes Favoris</h2>
+         {favorites.length === 0 ? (
+            <p>Aucun événement en favori.</p>
+         ) : (
+            <Row>
+               {favorites.map((event, index) => (
+                  <Col key={`fav-col-${event.id || index}`} xs={12} sm={6} md={4} className="mb-4">
+                     <Event
+                        event={event}
+                        showAlert={showAlert}
+                     />
+                  </Col>
+               ))}
+            </Row>
+         )} */}
       </>
    )
 }
